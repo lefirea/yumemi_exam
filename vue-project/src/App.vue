@@ -3,6 +3,8 @@
 import axios from "axios";
 import {ref} from "vue";
 
+import graph from "./graph.vue";
+
 const ret = ref("");
 
 const headers = {
@@ -44,10 +46,13 @@ function test(ret){
 
 <template>
 
-<div class="checkbox-container">
+<div class="checkbox-container" id="pref-checkboxes">
     <label v-for="pref in prefList"><input type="checkbox" :id="'cb-' + pref[0]" :value="pref[1]">{{ pref[1] }}</label>
 </div>
 
-</template>
+<br>
 
+<graph />
+
+</template>
 
