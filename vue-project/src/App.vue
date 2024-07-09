@@ -10,7 +10,7 @@ const ret = ref("");
 const headers = {
     "X-API-KEY": "e50Z2QcETe021TucuXheW5BezTVKjbOusO1Ch4cq",
 }
-async function get(){
+async function getPrefs(){
     await axios.get("https://opendata.resas-portal.go.jp/api/v1/prefectures", {headers: headers})
         .then(function (response){
             console.log("success");
@@ -24,7 +24,7 @@ async function get(){
         });
 }
 
-get();
+getPrefs();
 
 
 </script>

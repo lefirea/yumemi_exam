@@ -1,42 +1,75 @@
 <script setup>
+import axios from "axios";
 import {ref, reactive} from "vue";
 
-console.log("graph.vue loaded");
-
 var prefs = reactive({ checked: ["no checked"] });
+var prefPopulations = reactive({ result: {"none": ""} });
 
-function clicked(){
+async function clicked(){
     var prefsCheckboxes = document.getElementById("pref-checkboxes").children;
 
+    /* チェックされた都道府県を列挙する */
     prefs.checked = [];
     for(var i = 0; i < prefsCheckboxes.length; i++){
         var pref = prefsCheckboxes[i].children[0];
         if(pref.checked){
-            prefs.checked.push(pref.value);
+            var prefCode = pref.id.split("-")[1];
+            var prefName = pref.value;
+            prefs.checked.push([prefCode, prefName]);
         }
     }
 
+    /* チェックされた個数に応じた処理 */
     if(prefs.checked.length == 0){
-        console.log("no checked");
         prefs.checked = ["no checked"];
+        prefPopulations["result"] = {"none": ""};
     }
     else{
-        console.log(prefs.checked.join(", "));
+        prefPopulations["result"] = {};
+        /* チェックされた都道府県ごとに人口統計を取得する */
+        for(var i = 0; i < prefs.checked.length; i++){
+            var prefCode = prefs.checked[i][0];
+            var prefName = prefs.checked[i][1];
+
+            var ret = await getPrefPopulation(prefCode);
+            prefPopulations["result"][prefName] = ret;
+        }
     }
+}
+
+async function getPrefPopulation(prefCode){
+    var res = null;
+
+    const headers = {
+        "X-API-KEY": "e50Z2QcETe021TucuXheW5BezTVKjbOusO1Ch4cq",
+    };
+    
+    await axios.get("https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear",
+        {headers: headers,
+         params: {
+            prefCode: prefCode,
+            cityCode: "-"
+         }
+    }).then(function (response){
+        var data = response["data"]["result"];
+        res = data;
+    }).catch(function (err){
+        // pass
+    });
+
+    return res;
 }
 
 </script>
 
 <template>
 
-<p>graph.vue will here</p><br>
-
 <button @click="clicked">click here!</button>
 
 <br>
 
 <div>
-{{ prefs.checked }}
+{{ prefPopulations.result }}
 </div>
 
 </template>
