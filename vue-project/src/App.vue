@@ -16,7 +16,7 @@ async function getPrefs(){
             console.log("success");
             // console.log(response);
             ret.value = response;
-            test(ret.value);
+            prefs2List(ret.value);
         })
         .catch(function (err){
             console.log("error");
@@ -33,7 +33,7 @@ getPrefs();
 import {ref} from "vue";
 var prefList = ref([]);
 
-function test(ret){
+function prefs2List(ret){
     var data = ret["data"]["result"];
     var prefs = [];
     for(var i = 0; i < data.length; i++){
