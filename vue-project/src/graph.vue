@@ -9,8 +9,6 @@ var prefPopulations = reactive({ result: {"none": ""} });
 var child = ref(null);
 
 async function clicked(){
-    console.log("called clicked()");
-
     var prefsCheckboxes = document.getElementById("pref-checkboxes").children;
 
     /* チェックされた都道府県を列挙する */
@@ -23,7 +21,6 @@ async function clicked(){
             prefs.checked.push([prefCode, prefName]);
         }
     }
-    console.log("prefs.ckecked");
 
     /* チェックされた個数に応じた処理 */
     if(prefs.checked.length == 0){
@@ -41,6 +38,9 @@ async function clicked(){
             prefPopulations["result"][prefName] = ret;
         }
     }
+
+    console.log(prefPopulations["result"]);
+    console.log(Object.keys(prefPopulations["result"]));
     
     var data = {
         columns: [
@@ -48,15 +48,10 @@ async function clicked(){
             ['data2', 50, 20, 10, 40, 15, 25]
         ]
     }
-    child.value.draw(data);
-    console.log("finished clicked()");
-
-    // drawGraph();
+    child.value.draw(prefPopulations);
 }
 
 async function getPrefPopulation(prefCode){
-    console.log("called getPrefPopulaton()");
-
     var res = null;
 
     const headers = {
@@ -76,8 +71,6 @@ async function getPrefPopulation(prefCode){
         // pass
     });
 
-    console.log("finished getPrefPopulation()");
-
     return res;
 }
 
@@ -85,55 +78,14 @@ async function getPrefPopulation(prefCode){
 
 </script>
 
-<script>
-// import { ref } from "vue";
-// import DrawGraph from "./draw_graph.vue"
-// 
-// export default {
-//     name: "App",
-//     components: {
-//         DrawGraph
-//     },
-//     setup() {
-//         const chartData = ref(null);
-// 
-//         const fetchData = async () => {
-//             await clicked();
-// 
-//             return {
-//                 columns: [
-//                     ['data1', 30, 200, 100, 400, 150, 250],
-//                     ['data2', 50, 20, 10, 40, 15, 25]
-//                 ]
-//             };
-//         };
-// 
-//         const handleButtonClick = async () => {
-//             console.log("clicked");
-//             try{
-//                 const data = await fetchData();
-//                 chartData.value = data;
-//             } catch {
-//                 console.log("Error fetching data:", error);
-//             }
-//         };
-//         
-//         // handleButtonClick();
-//         console.log(charData);
-//         console.log(handleButtonClick);
-//         return { chartData, handleButtonClick };
-//     }
-// };
-</script>
 
 <template>
 
-<button @click="clicked">click here!</button>
+<button @click="clicked" id="drawGraphButton">click here!</button>
 
 <br>
 
 <div>
-{{ prefPopulations.result }}
 </div>
 
 <br>
