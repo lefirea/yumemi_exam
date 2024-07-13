@@ -4,7 +4,7 @@ import { ref, reactive } from 'vue'
 import DrawGraph from './draw_graph.vue'
 
 let prefs = reactive({ checked: ['no checked'] })
-let prefPopulations = reactive({ result: { none: '' } })
+let prefPopulations = reactive({ result: { 'no-data': '' } })
 
 let child = ref(null)
 
@@ -25,7 +25,7 @@ async function clicked() {
   /* チェックされた個数に応じた処理 */
   if (prefs.checked.length == 0) {
     prefs.checked = ['no checked']
-    prefPopulations['result'] = { none: '' }
+    prefPopulations['result'] = { "no-data": '' }
   } else {
     prefPopulations['result'] = {}
     /* チェックされた都道府県ごとに人口統計を取得する */

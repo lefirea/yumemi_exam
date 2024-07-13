@@ -13,8 +13,6 @@ async function getPrefs() {
   await axios
     .get('https://opendata.resas-portal.go.jp/api/v1/prefectures', { headers: headers })
     .then(function (response) {
-      console.log('success')
-      // console.log(response);
       ret.value = response
       prefs2List(ret.value)
     })

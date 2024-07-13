@@ -5,6 +5,15 @@ import { defineExpose } from 'vue'
 import 'c3/c3.min.css'
 
 function draw(data) {
+  try{
+    if(data["result"]["no-data"] === ""){
+      document.getElementById("my-chart").innerHTML = "都道府県を選択してください"
+      return null
+    }
+  }catch(err){
+    // 都道府県が選択されているので問題なし
+  }
+
   let dataTypeLabel = { 0: '総人口', 1: '年少人口', 2: '生産年齢人口', 3: '老年人口' }
 
   let dataType = document.getElementById('data-type').selectedIndex
