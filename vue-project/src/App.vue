@@ -4,14 +4,10 @@ import { ref } from 'vue'
 
 import graph from './graph.vue'
 
-// import dotenv from "dotenv"
-// dotenv.config()
-
 const ret = ref('')
 
-console.log(process.env.VITE_RESAS_KEY)
 const headers = {
-  'X-API-KEY': import.meta.env.VITE_RESAS_KEY
+  'X-API-KEY': import.meta.env.VITE_RESAS_API_KEY
 }
 async function getPrefs() {
   await axios

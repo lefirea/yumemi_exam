@@ -47,7 +47,7 @@ async function getPrefPopulation(prefCode) {
   let res = null
 
   const headers = {
-    'X-API-KEY': 'e50Z2QcETe021TucuXheW5BezTVKjbOusO1Ch4cq'
+    'X-API-KEY': import.meta.env.VITE_RESAS_API_KEY
   }
 
   await axios
