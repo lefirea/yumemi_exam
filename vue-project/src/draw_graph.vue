@@ -5,12 +5,12 @@ import { defineExpose } from 'vue'
 import 'c3/c3.min.css'
 
 function draw(data) {
-  try{
-    if(data["result"]["no-data"] === ""){
-      document.getElementById("my-chart").innerHTML = "都道府県を選択してください"
+  try {
+    if (data['result']['no-data'] === '') {
+      document.getElementById('my-chart').innerHTML = '都道府県を選択してください'
       return null
     }
-  }catch(err){
+  } catch (err) {
     // 都道府県が選択されているので問題なし
   }
 

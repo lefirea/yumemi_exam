@@ -11,6 +11,8 @@ let child = ref(null)
 async function clicked() {
   let prefsCheckboxes = document.getElementById('pref-checkboxes').children
 
+  document.getElementById('my-chart').innerHTML = 'データ取得中...'
+
   /* チェックされた都道府県を列挙する */
   prefs.checked = []
   for (let i = 0; i < prefsCheckboxes.length; i++) {
@@ -25,7 +27,7 @@ async function clicked() {
   /* チェックされた個数に応じた処理 */
   if (prefs.checked.length == 0) {
     prefs.checked = ['no checked']
-    prefPopulations['result'] = { "no-data": '' }
+    prefPopulations['result'] = { 'no-data': '' }
   } else {
     prefPopulations['result'] = {}
     /* チェックされた都道府県ごとに人口統計を取得する */

@@ -43,7 +43,7 @@ function prefs2List(ret) {
   <br />
 
   <div>
-    <h2>都道府県を選択してね</h2>
+    <h2>都道府県を選択してからボタンを押してね</h2>
     <div class="checkbox-container" id="pref-checkboxes">
       <label v-for="pref in prefList" :key="pref[0]">
         <input type="checkbox" :id="'cb-' + pref[0]" :value="pref[1]" />{{ pref[1] }}
@@ -54,7 +54,6 @@ function prefs2List(ret) {
   <br /><br />
 
   <div>
-    <h2>グラフが表示されるよ</h2>
     <graph />
   </div>
 </template>

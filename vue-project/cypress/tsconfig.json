@@ -1,0 +1,11 @@
+{
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "types": ["cypress"],
+        "baseUrl": "http://test/leflove.net/yumemi_exam/index.html"
+    },
+    "include": [
+        "../node_modules/cypress",
+        "./**/*.ts"
+    ]
+}
