@@ -9,12 +9,14 @@ const ret = ref('')
 const headers = {
   'X-API-KEY': import.meta.env.VITE_RESAS_API_KEY
 }
+
+/* 都道府県名一覧を取得 */
 async function getPrefs() {
   await axios
     .get('https://opendata.resas-portal.go.jp/api/v1/prefectures', { headers: headers })
     .then(function (response) {
       ret.value = response
-      prefs2List(ret.value)
+      prefs2List(ret.value)  // データを整形
     })
     .catch(function (err) {
       console.log('error')
@@ -28,6 +30,11 @@ getPrefs()
 <script>
 var prefList = ref([])
 
+/* APIから帰ってきたjsonデータを整形 */
+// 例: [[1, "北海道"],
+//      [2, "青森件"],
+//      ...
+//     ]
 function prefs2List(ret) {
   var data = ret['data']['result']
   for (var i = 0; i < data.length; i++) {

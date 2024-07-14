@@ -6,7 +6,8 @@ import 'c3/c3.min.css'
 
 function draw(data) {
   try {
-    if (data['result']['no-data'] === '') {
+    // 都道府県が一切選択されてなければメッセージを表示して終了
+    if (data['result']['no-data'] === 'yes') {
       document.getElementById('my-chart').innerHTML = '都道府県を選択してください'
       return null
     }
@@ -21,11 +22,18 @@ function draw(data) {
   let prefs = Object.keys(data['result'])
   let boundaryYear = data['result'][prefs[0]]['boundaryYear']
 
+  /* グラフ横軸の西暦データを作成 */
   let years = ['years']
   for (let i = 1980; i <= boundaryYear; i += 5) {
     years.push(i)
   }
 
+  /* c3jsのためのデータ構造に変換 */
+  // 例：[["years", 1980, 1985, ...],
+  //      ["東京都", value1, value2, ...],
+  //      ["大阪府", value1, value2, ...],
+  //      ...
+  //     ]
   let columns = [years]
   for (let pref of prefs) {
     let column = [pref]
@@ -38,6 +46,7 @@ function draw(data) {
     columns.push(column)
   }
 
+  /* グラフを描画する */
   c3.generate({
     bindto: '#my-chart',
     padding: { right: 20 },

@@ -4,13 +4,15 @@ import { ref, reactive } from 'vue'
 import DrawGraph from './draw_graph.vue'
 
 let prefs = reactive({ checked: ['no checked'] })
-let prefPopulations = reactive({ result: { 'no-data': '' } })
+let prefPopulations = reactive({ result: { 'no-data': 'yes' } })
 
 let child = ref(null)
 
+/* 「グラフを表示」ボタンが押されたら実行される */
 async function clicked() {
   let prefsCheckboxes = document.getElementById('pref-checkboxes').children
 
+  // データの取得中の表示を出しておく（あとで上書きされて更新される）
   document.getElementById('my-chart').innerHTML = 'データ取得中...'
 
   /* チェックされた都道府県を列挙する */
@@ -40,9 +42,12 @@ async function clicked() {
     }
   }
 
+  // 子（draw_graph.vue）で定義した関数を呼び出してグラフ描画
+  // データ取得中の表示はこの関数内で更新される
   child.value.draw(prefPopulations)
 }
 
+/* １都道府県ごとにAPIを呼び出して人口動態を取得 */
 async function getPrefPopulation(prefCode) {
   let res = null
 
